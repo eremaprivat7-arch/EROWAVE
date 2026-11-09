@@ -1,0 +1,336 @@
+// !$*UTF8*$!
+{
+	"archiveVersion" = 1;
+	"classes" = {
+	};
+	"objectVersion" = 77;
+	"objects" = {
+		"FC4A695F02A8A53A129DCB9A" = {
+			"isa" = "PBXFileSystemSynchronizedRootGroup";
+			"path" = "App";
+			"sourceTree" = "<group>";
+		};
+		"DB442561F303E6C885B3DEE5" = {
+			"isa" = "PBXFileReference";
+			"explicitFileType" = "wrapper.application";
+			"includeInIndex" = 0;
+			"path" = "EROWAVE.app";
+			"sourceTree" = "BUILT_PRODUCTS_DIR";
+		};
+		"8569F0919062FB5CB9CD3108" = {
+			"isa" = "PBXSourcesBuildPhase";
+			"buildActionMask" = 2147483647;
+			"files" = ();
+			"runOnlyForDeploymentPostprocessing" = 0;
+		};
+		"ABE41C899641D50EF00177AB" = {
+			"isa" = "PBXFrameworksBuildPhase";
+			"buildActionMask" = 2147483647;
+			"files" = ();
+			"runOnlyForDeploymentPostprocessing" = 0;
+		};
+		"6F8587217237F51F0116ED76" = {
+			"isa" = "PBXResourcesBuildPhase";
+			"buildActionMask" = 2147483647;
+			"files" = ();
+			"runOnlyForDeploymentPostprocessing" = 0;
+		};
+		"42308B43779175510E2509E5" = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.eromchik.erowave";
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"SWIFT_VERSION" = "5.0";
+				"TARGETED_DEVICE_FAMILY" = "1";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+				"LD_RUNPATH_SEARCH_PATHS" = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				"INFOPLIST_FILE" = "Info.plist";
+				"ASSETCATALOG_COMPILER_APPICON_NAME" = "AppIcon";
+			};
+			"name" = "Debug";
+		};
+		"DE1BF68EBD59870458EC3D18" = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.eromchik.erowave";
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"SWIFT_VERSION" = "5.0";
+				"TARGETED_DEVICE_FAMILY" = "1";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+				"LD_RUNPATH_SEARCH_PATHS" = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				"INFOPLIST_FILE" = "Info.plist";
+				"ASSETCATALOG_COMPILER_APPICON_NAME" = "AppIcon";
+			};
+			"name" = "Release";
+		};
+		"1F953D0735FC7E0F7B0AE59E" = {
+			"isa" = "XCConfigurationList";
+			"buildConfigurations" = ("42308B43779175510E2509E5", "DE1BF68EBD59870458EC3D18");
+			"defaultConfigurationIsVisible" = 0;
+			"defaultConfigurationName" = "Release";
+		};
+		"8CD800EEC190A4A62CF17E74" = {
+			"isa" = "PBXNativeTarget";
+			"name" = "EROWAVE";
+			"buildConfigurationList" = "1F953D0735FC7E0F7B0AE59E";
+			"buildPhases" = ("8569F0919062FB5CB9CD3108", "ABE41C899641D50EF00177AB", "6F8587217237F51F0116ED76");
+			"buildRules" = ();
+			"dependencies" = ();
+			"fileSystemSynchronizedGroups" = ("FC4A695F02A8A53A129DCB9A");
+			"productName" = "EROWAVE";
+			"productReference" = "DB442561F303E6C885B3DEE5";
+			"productType" = "com.apple.product-type.application";
+		};
+		"39FDEC1194D94212B871A28B" = {
+			"isa" = "PBXFileSystemSynchronizedRootGroup";
+			"path" = "Tests";
+			"sourceTree" = "<group>";
+		};
+		"B45ADEE9B3CDBA7076C9F320" = {
+			"isa" = "PBXFileReference";
+			"explicitFileType" = "wrapper.cfbundle";
+			"includeInIndex" = 0;
+			"path" = "EROWAVETests.xctest";
+			"sourceTree" = "BUILT_PRODUCTS_DIR";
+		};
+		"99C894A44A8C4A4CF4252CB5" = {
+			"isa" = "PBXSourcesBuildPhase";
+			"buildActionMask" = 2147483647;
+			"files" = ();
+			"runOnlyForDeploymentPostprocessing" = 0;
+		};
+		"D7BC01ECA873A43070EC495B" = {
+			"isa" = "PBXFrameworksBuildPhase";
+			"buildActionMask" = 2147483647;
+			"files" = ();
+			"runOnlyForDeploymentPostprocessing" = 0;
+		};
+		"93DF0A25518812F853D4FE37" = {
+			"isa" = "PBXResourcesBuildPhase";
+			"buildActionMask" = 2147483647;
+			"files" = ();
+			"runOnlyForDeploymentPostprocessing" = 0;
+		};
+		"BEBB0E61BA69FDFE51FCF6E1" = {
+			"isa" = "PBXContainerItemProxy";
+			"containerPortal" = "98F54143AB4E86B28C3AFEE0";
+			"proxyType" = 1;
+			"remoteGlobalIDString" = "8CD800EEC190A4A62CF17E74";
+			"remoteInfo" = "EROWAVE";
+		};
+		"CD01F9F7F4CAEEF45F1E0C94" = {
+			"isa" = "PBXTargetDependency";
+			"target" = "8CD800EEC190A4A62CF17E74";
+			"targetProxy" = "BEBB0E61BA69FDFE51FCF6E1";
+		};
+		"8D8479A4FE2B0E78CDF053D6" = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.eromchik.erowave.EROWAVETests";
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"SWIFT_VERSION" = "5.0";
+				"TARGETED_DEVICE_FAMILY" = "1";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+				"LD_RUNPATH_SEARCH_PATHS" = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				"GENERATE_INFOPLIST_FILE" = "YES";
+				"TEST_HOST" = "$(BUILT_PRODUCTS_DIR)/EROWAVE.app/EROWAVE";
+				"BUNDLE_LOADER" = "$(TEST_HOST)";
+			};
+			"name" = "Debug";
+		};
+		"0819C17A2D2E8442ABE2D6E5" = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.eromchik.erowave.EROWAVETests";
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"SWIFT_VERSION" = "5.0";
+				"TARGETED_DEVICE_FAMILY" = "1";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+				"LD_RUNPATH_SEARCH_PATHS" = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				"GENERATE_INFOPLIST_FILE" = "YES";
+				"TEST_HOST" = "$(BUILT_PRODUCTS_DIR)/EROWAVE.app/EROWAVE";
+				"BUNDLE_LOADER" = "$(TEST_HOST)";
+			};
+			"name" = "Release";
+		};
+		"EB310D2BE5C78349038C953E" = {
+			"isa" = "XCConfigurationList";
+			"buildConfigurations" = ("8D8479A4FE2B0E78CDF053D6", "0819C17A2D2E8442ABE2D6E5");
+			"defaultConfigurationIsVisible" = 0;
+			"defaultConfigurationName" = "Release";
+		};
+		"E5CD1CCD7441BE1B7ECB5924" = {
+			"isa" = "PBXNativeTarget";
+			"name" = "EROWAVETests";
+			"buildConfigurationList" = "EB310D2BE5C78349038C953E";
+			"buildPhases" = ("99C894A44A8C4A4CF4252CB5", "D7BC01ECA873A43070EC495B", "93DF0A25518812F853D4FE37");
+			"buildRules" = ();
+			"dependencies" = ("CD01F9F7F4CAEEF45F1E0C94");
+			"fileSystemSynchronizedGroups" = ("39FDEC1194D94212B871A28B");
+			"productName" = "EROWAVETests";
+			"productReference" = "B45ADEE9B3CDBA7076C9F320";
+			"productType" = "com.apple.product-type.bundle.unit-test";
+		};
+		"8D5093D2C263EEDEAE2010BE" = {
+			"isa" = "PBXFileSystemSynchronizedRootGroup";
+			"path" = "UITests";
+			"sourceTree" = "<group>";
+		};
+		"5A5A9CBE8E608EE43581EC2C" = {
+			"isa" = "PBXFileReference";
+			"explicitFileType" = "wrapper.cfbundle";
+			"includeInIndex" = 0;
+			"path" = "EROWAVEUITests.xctest";
+			"sourceTree" = "BUILT_PRODUCTS_DIR";
+		};
+		"B7D179D4BBAE0661BBC392BE" = {
+			"isa" = "PBXSourcesBuildPhase";
+			"buildActionMask" = 2147483647;
+			"files" = ();
+			"runOnlyForDeploymentPostprocessing" = 0;
+		};
+		"5C6B6402CE60AE26D7AF95CF" = {
+			"isa" = "PBXFrameworksBuildPhase";
+			"buildActionMask" = 2147483647;
+			"files" = ();
+			"runOnlyForDeploymentPostprocessing" = 0;
+		};
+		"A4094EF23F3082F8D257465A" = {
+			"isa" = "PBXResourcesBuildPhase";
+			"buildActionMask" = 2147483647;
+			"files" = ();
+			"runOnlyForDeploymentPostprocessing" = 0;
+		};
+		"D239C9F483552FDB1DAEDD44" = {
+			"isa" = "PBXContainerItemProxy";
+			"containerPortal" = "98F54143AB4E86B28C3AFEE0";
+			"proxyType" = 1;
+			"remoteGlobalIDString" = "8CD800EEC190A4A62CF17E74";
+			"remoteInfo" = "EROWAVE";
+		};
+		"A1D244F97F1CE1272A8C039F" = {
+			"isa" = "PBXTargetDependency";
+			"target" = "8CD800EEC190A4A62CF17E74";
+			"targetProxy" = "D239C9F483552FDB1DAEDD44";
+		};
+		"D1E7D6600779D28183C19CAC" = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.eromchik.erowave.EROWAVEUITests";
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"SWIFT_VERSION" = "5.0";
+				"TARGETED_DEVICE_FAMILY" = "1";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+				"LD_RUNPATH_SEARCH_PATHS" = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				"GENERATE_INFOPLIST_FILE" = "YES";
+				"TEST_TARGET_NAME" = "EROWAVE";
+			};
+			"name" = "Debug";
+		};
+		"11D0D8A35113EE6EEFE62536" = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.eromchik.erowave.EROWAVEUITests";
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"SWIFT_VERSION" = "5.0";
+				"TARGETED_DEVICE_FAMILY" = "1";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+				"LD_RUNPATH_SEARCH_PATHS" = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				"GENERATE_INFOPLIST_FILE" = "YES";
+				"TEST_TARGET_NAME" = "EROWAVE";
+			};
+			"name" = "Release";
+		};
+		"655357F1DFCD289FE5800001" = {
+			"isa" = "XCConfigurationList";
+			"buildConfigurations" = ("D1E7D6600779D28183C19CAC", "11D0D8A35113EE6EEFE62536");
+			"defaultConfigurationIsVisible" = 0;
+			"defaultConfigurationName" = "Release";
+		};
+		"C89DBA836A245A92AC90F515" = {
+			"isa" = "PBXNativeTarget";
+			"name" = "EROWAVEUITests";
+			"buildConfigurationList" = "655357F1DFCD289FE5800001";
+			"buildPhases" = ("B7D179D4BBAE0661BBC392BE", "5C6B6402CE60AE26D7AF95CF", "A4094EF23F3082F8D257465A");
+			"buildRules" = ();
+			"dependencies" = ("A1D244F97F1CE1272A8C039F");
+			"fileSystemSynchronizedGroups" = ("8D5093D2C263EEDEAE2010BE");
+			"productName" = "EROWAVEUITests";
+			"productReference" = "5A5A9CBE8E608EE43581EC2C";
+			"productType" = "com.apple.product-type.bundle.ui-testing";
+		};
+		"FBDC4F23F93125BBEEAE800C" = {
+			"isa" = "PBXGroup";
+			"children" = ("DB442561F303E6C885B3DEE5", "B45ADEE9B3CDBA7076C9F320", "5A5A9CBE8E608EE43581EC2C");
+			"name" = "Products";
+			"sourceTree" = "<group>";
+		};
+		"B28B7AF69320201D1CF206EB" = {
+			"isa" = "PBXGroup";
+			"children" = ("FC4A695F02A8A53A129DCB9A", "39FDEC1194D94212B871A28B", "8D5093D2C263EEDEAE2010BE", "FBDC4F23F93125BBEEAE800C");
+			"sourceTree" = "<group>";
+		};
+		"89E1FD6268CC0F221A2BE178" = {
+			"isa" = "XCBuildConfiguration";
+			"name" = "Debug";
+			"buildSettings" = {
+				"SDKROOT" = "iphoneos";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "17.0";
+				"SWIFT_OPTIMIZATION_LEVEL" = "-Onone";
+				"ENABLE_TESTABILITY" = "YES";
+				"CLANG_ENABLE_MODULES" = "YES";
+				"SWIFT_ACTIVE_COMPILATION_CONDITIONS" = "DEBUG";
+			};
+		};
+		"E6DE6C99132752C914FEF632" = {
+			"isa" = "XCBuildConfiguration";
+			"name" = "Release";
+			"buildSettings" = {
+				"SDKROOT" = "iphoneos";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "17.0";
+				"SWIFT_OPTIMIZATION_LEVEL" = "-O";
+				"ENABLE_TESTABILITY" = "NO";
+				"CLANG_ENABLE_MODULES" = "YES";
+				"SWIFT_ACTIVE_COMPILATION_CONDITIONS" = "";
+			};
+		};
+		"A411248851BA55258DE27FCE" = {
+			"isa" = "XCConfigurationList";
+			"buildConfigurations" = ("89E1FD6268CC0F221A2BE178", "E6DE6C99132752C914FEF632");
+			"defaultConfigurationIsVisible" = 0;
+			"defaultConfigurationName" = "Release";
+		};
+		"98F54143AB4E86B28C3AFEE0" = {
+			"isa" = "PBXProject";
+			"attributes" = {
+				"BuildIndependentTargetsInParallel" = "YES";
+				"LastUpgradeCheck" = "1600";
+				"TargetAttributes" = {
+					"8CD800EEC190A4A62CF17E74" = {
+						"CreatedOnToolsVersion" = "16.0";
+					};
+					"E5CD1CCD7441BE1B7ECB5924" = {
+						"CreatedOnToolsVersion" = "16.0";
+						"TestTargetID" = "8CD800EEC190A4A62CF17E74";
+					};
+					"C89DBA836A245A92AC90F515" = {
+						"CreatedOnToolsVersion" = "16.0";
+						"TestTargetID" = "8CD800EEC190A4A62CF17E74";
+					};
+				};
+			};
+			"buildConfigurationList" = "A411248851BA55258DE27FCE";
+			"compatibilityVersion" = "Xcode 16.0";
+			"developmentRegion" = "en";
+			"hasScannedForEncodings" = 0;
+			"knownRegions" = ("en", "Base");
+			"mainGroup" = "B28B7AF69320201D1CF206EB";
+			"productRefGroup" = "FBDC4F23F93125BBEEAE800C";
+			"projectDirPath" = "";
+			"projectRoot" = "";
+			"targets" = ("8CD800EEC190A4A62CF17E74", "E5CD1CCD7441BE1B7ECB5924", "C89DBA836A245A92AC90F515");
+			"preferredProjectObjectVersion" = 77;
+		};
+	};
+	"rootObject" = "98F54143AB4E86B28C3AFEE0";
+}

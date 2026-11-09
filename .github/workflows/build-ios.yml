@@ -1,0 +1,94 @@
+name: Build ERØWAVE for iPhone
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: macos-15
+    timeout-minutes: 55
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+      - name: Select installed Xcode and iPhone simulator
+        run: |
+          set -euo pipefail
+          mkdir -p logs
+          python3 - <<'PY'
+          import glob, json, os, re, subprocess
+          from pathlib import Path
+          candidates = []
+          for path in glob.glob('/Applications/Xcode*.app/Contents/Developer'):
+              env = dict(os.environ, DEVELOPER_DIR=path)
+              version = subprocess.check_output(['xcodebuild','-version'], env=env, text=True)
+              match = re.search(r'Xcode (\d+)(?:\.(\d+))?', version)
+              if not match or int(match[1]) < 16:
+                  continue
+              candidates.append(((int(match[1]),int(match[2] or 0)),path))
+          for _,path in sorted(candidates,reverse=True):
+              env = dict(os.environ, DEVELOPER_DIR=path)
+              result = subprocess.run(['xcrun','simctl','list','devices','available','-j'],env=env,capture_output=True,text=True)
+              if result.returncode:
+                  continue
+              available = []
+              for runtime,devices in json.loads(result.stdout)['devices'].items():
+                  if '.iOS-' not in runtime:
+                      continue
+                  parts = tuple(int(i) for i in runtime.split('.iOS-')[-1].split('-') if i.isdigit())
+                  if not parts or parts[0] < 17:
+                      continue
+                  for d in devices:
+                      if d['name'].startswith('iPhone') and d['isAvailable']:
+                          available.append((parts,d['name'],d['udid']))
+              if available:
+                  with open(os.environ['GITHUB_ENV'],'a') as out:
+                      print('DEVELOPER_DIR='+path,file=out)
+                      print('SIM_ID='+max(available)[2],file=out)
+                  break
+          else:
+              raise SystemExit('Install Xcode 16+ with an iOS 17+ iPhone simulator.')
+          PY
+      - name: Toolchain and project
+        run: |
+          set -eo pipefail
+          xcodebuild -version | tee logs/toolchain.log
+          xcrun swift --version | tee -a logs/toolchain.log
+          xcodebuild -list -project EROWAVE.xcodeproj | tee logs/project.log
+      - name: Build and run unit and UI tests
+        run: |
+          set -eo pipefail
+          xcrun simctl boot "$SIM_ID" || xcrun simctl bootstatus "$SIM_ID" -b
+          xcrun simctl bootstatus "$SIM_ID" -b
+          xcodebuild test -project EROWAVE.xcodeproj -scheme EROWAVE \
+            -configuration Debug -destination "platform=iOS Simulator,id=$SIM_ID" \
+            -parallel-testing-enabled NO -resultBundlePath logs/Tests.xcresult \
+            -derivedDataPath build/DerivedData | tee logs/test.log
+      - name: Archive device build
+        run: |
+          set -eo pipefail
+          xcodebuild archive -project EROWAVE.xcodeproj -scheme EROWAVE \
+            -configuration Release -destination 'generic/platform=iOS' \
+            -archivePath build/EROWAVE.xcarchive CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO | tee logs/archive.log
+      - name: Package unsigned IPA
+        run: |
+          set -euo pipefail
+          mkdir -p build/package/Payload
+          ditto build/EROWAVE.xcarchive/Products/Applications/EROWAVE.app build/package/Payload/EROWAVE.app
+          test -x build/package/Payload/EROWAVE.app/EROWAVE
+          (cd build/package && ditto -c -k --keepParent Payload ../EROWAVE-unsigned.ipa)
+          unzip -t build/EROWAVE-unsigned.ipa
+      - uses: actions/upload-artifact@v4
+        with:
+          name: EROWAVE-unsigned
+          path: build/EROWAVE-unsigned.ipa
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: build-logs
+          path: logs
