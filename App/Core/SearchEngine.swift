@@ -13,43 +13,83 @@ actor SearchEngine {
     let catalogs: [any MusicCatalog]
     private var cache: [String: (Date,SearchPage)] = [:]
     init(_ catalogs: [any MusicCatalog] = [AudiusCatalog(), ITunesCatalog(), MusicBrainzCatalog(), ArchiveCatalog(), LibraryOfCongressCatalog()]) { self.catalogs = catalogs }
-    static func normal(_ s: String) -> String { s.folding(options:[.diacriticInsensitive,.caseInsensitive],locale:Locale(identifier:"en_US_POSIX")).split { !$0.isNumber && !$0.isLetter }.joined(separator:" ") }
+    static func normal(_ text: String) -> String {
+        let folded = text.folding(options: [.diacriticInsensitive, .caseInsensitive],
+                                  locale: Locale(identifier: "en_US_POSIX"))
+        let words = folded.split { character in
+            !character.isNumber && !character.isLetter
+        }
+        return words.joined(separator: " ")
+    }
+
+    private static func grams(_ text: String) -> Set<String> {
+        let letters = Array(text)
+        guard letters.count > 2 else { return [text] }
+        var result = Set<String>()
+        for start in 0..<(letters.count - 2) {
+            let end = start + 2
+            result.insert(String(letters[start...end]))
+        }
+        return result
+    }
+
     static func rank(_ tracks: [MusicTrack], term: String) -> [MusicTrack] {
         let query = normal(term)
-        func grams(_ s:String) -> Set<String> {
-            let letters=Array(s)
-            guard letters.count>2 else { return [s] }
-            return Set((0..<(letters.count-2)).map { String(letters[$0...($0+2)]) })
+        let words = query.split(separator: " ").map { String($0) }
+        let wanted = grams(query)
+        var scored: [(track: MusicTrack, score: Int)] = []
+        for track in tracks {
+            let title = normal(track.title)
+            let artist = normal(track.artist)
+            let text = title + " " + artist
+            let overlap = wanted.intersection(grams(text)).count
+            var score: Int = 6 * overlap / max(1, wanted.count)
+            for word in words where text.contains(word) { score += 3 }
+            if title == query { score += 20 }
+            if artist == query { score += 12 }
+            if track.canPlay { score += 1 }
+            scored.append((track, score))
         }
-        let wanted=grams(query)
-        func score(_ t: MusicTrack) -> Int {
-            let title = normal(t.title), artist = normal(t.artist)
-            let hits = query.split(separator:" ").filter { (title+" "+artist).contains($0) }.count
-            let candidate=grams(title+" "+artist)
-            let similarity=6 * wanted.intersection(candidate).count / max(1,wanted.count)
-            return similarity + (title == query ? 20 : 0) + (artist == query ? 12 : 0) + hits*3 + (t.canPlay ? 1 : 0)
+
+        scored.sort { left, right in
+            if left.score == right.score { return left.track.id < right.track.id }
+            return left.score > right.score
         }
+
         var seen = Set<String>()
-        return tracks.map { ($0,score($0)) }.sorted { a,b in
-            a.1 == b.1 ? a.0.id < b.0.id : a.1 > b.1
-        }.map { $0.0 }.filter { t in
-            var key = t.id
-            if let isrc=t.isrc, !isrc.isEmpty, let duration=t.seconds {
-                key = [isrc.uppercased(), normal(t.artist), normal(t.title), String(Int(duration.rounded()))].joined(separator:"|")
+        var result: [MusicTrack] = []
+        for entry in scored {
+            let track = entry.track
+            var key = track.id
+            if let isrc = track.isrc, !isrc.isEmpty, let duration = track.seconds {
+                let seconds = String(Int(duration.rounded()))
+                let fields: [String] = [isrc.uppercased(), normal(track.artist), normal(track.title), seconds]
+                key = fields.joined(separator: "|")
             }
-            return seen.insert(key).inserted
+            if seen.insert(key).inserted { result.append(track) }
         }
+        return result
     }
     func search(_ term: String, page: Int, update: (@Sendable (SearchPage) async -> Void)? = nil) async throws -> SearchPage {
         try Task.checkCancellation()
         let key = "\(page):\(term.lowercased())"
         if let hit=cache[key], Date().timeIntervalSince(hit.0)<90 { return hit.1 }
         var batch = SearchPage()
-        if page == 0 { batch.tracks = MusicTrack.originals.filter { Self.normal([$0.title,$0.artist,$0.album ?? ""].joined(separator:" ")).contains(Self.normal(term)) } }
+        if page == 0 {
+            let query = Self.normal(term)
+            for track in MusicTrack.originals {
+                let fields: [String] = [track.title, track.artist, track.album ?? ""]
+                let searchable = Self.normal(fields.joined(separator: " "))
+                if searchable.contains(query) { batch.tracks.append(track) }
+            }
+        }
         if !batch.tracks.isEmpty { await update?(batch) }
         await withTaskGroup(of:(String,[MusicTrack]?).self) { group in
             for catalog in catalogs {
-                group.addTask { (catalog.name,try? await catalog.search(term,page:page)) }
+                group.addTask {
+                    let rows: [MusicTrack]? = try? await catalog.search(term, page: page)
+                    return (catalog.name, rows)
+                }
             }
             for await (name,rows) in group {
                 if let rows { batch.tracks += rows; if name != "iTunes" && rows.count >= 25 { batch.more = true } }
