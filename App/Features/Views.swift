@@ -15,11 +15,20 @@ struct RootView: View {
             Color.black.ignoresSafeArea()
             if welcomed {
                 VStack(spacing:0) {
-                    ZStack {
-                        ForEach(SectionTab.allCases,id:\.self) { item in
+                    TabView(selection: $tab) {
+                        ForEach(SectionTab.allCases, id: \.self) { item in
                             NavigationStack {
-                                switch item { case .home:HomeScreen(); case .search:SearchScreen(store:search); case .library:LibraryScreen() }
-                            }.opacity(item==tab ? 1:0).allowsHitTesting(item==tab).accessibilityHidden(item != tab)
+                                Group {
+                                    switch item {
+                                    case .home: HomeScreen()
+                                    case .search: SearchScreen(store: search)
+                                    case .library: LibraryScreen()
+                                    }
+                                }
+                                .toolbar(.hidden, for: .tabBar)
+                            }
+                            .tabItem { Label(item.rawValue, systemImage: item.icon) }
+                            .tag(item)
                         }
                     }
                     if player.track != nil && !player.showFullPlayer { MiniPlayer(art:art) }
@@ -78,7 +87,7 @@ struct TrackRow:View {
                         Text(track.source+" · "+(track.canPlay ? "Full track":"Open externally")).font(.caption2).foregroundStyle(WaveStyle.muted)
                     }; Spacer()
                 }.contentShape(Rectangle())
-            }.buttonStyle(.plain).disabled(!track.canPlay && track.externalURL==nil)
+            }.buttonStyle(.plain).accessibilityIdentifier("track."+track.id).disabled(!track.canPlay && track.externalURL==nil)
             Menu {
                 Button(shelf.has("liked",track) ? "Unlike":"Like",systemImage:"heart") { shelf.toggle("liked","Liked Songs","system",track) }
                 Button("Add to Playlist",systemImage:"text.badge.plus") { choose=true }
