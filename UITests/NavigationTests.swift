@@ -10,7 +10,7 @@ final class NavigationTests:XCTestCase {
         app.buttons["tab.Library"].tap()
         XCTAssertTrue(app.navigationBars["Your Library"].waitForExistence(timeout:5))
         app.buttons["tab.Home"].tap()
-        let row=app.buttons.containing(.staticText,identifier:"Undertow").first
+        let row=app.buttons.containing(.staticText,identifier:"Undertow").firstMatch
         XCTAssertTrue(row.waitForExistence(timeout:5)); row.tap()
         XCTAssertTrue(app.buttons["Close player"].waitForExistence(timeout:5))
         app.buttons["Close player"].tap()
